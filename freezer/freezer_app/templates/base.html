@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <title>Freezer content tracking</title>
+    <script src="{% static 'js/freezer_app.js' %}"></script>
+
+</head>
+
+<body >
+    <header>
+        <div id="page-heading">
+            {% block header %}{% endblock %}
+        </div>
+        <div id="navigation">
+            <nav>
+
+            </nav>
+        </div>
+
+    </header>
+
+    <section>
+        {% block content%}
+        {% endblock %}
+    </section>
+    <footer>
+
+    </footer>
+</body>
+</html>
