@@ -16,7 +16,7 @@ def get_dictionary_of_food_items(show_currently_registered):
     """
     Returns a dictionary where food categories are the keys and currently (non)registered food items associated with that category are the values
     All FoodItem objects known to the freezer registration system are included if their attribute 'currently_registered' is set to the same boolean value as parameter 'show_currently_registered'
-    The dictionary serves as a context object for recordset.html template. The template will then show a list of all (non)registered items grouped by their categories
+    The dictionary serves as a context object for recordset.html template. The template will then show a list of all (non)registered items grouped by their categories.
     """
 
     food_items = FoodItem.objects.filter(currently_registered=show_currently_registered)    # function returns either registered or non-registered food items

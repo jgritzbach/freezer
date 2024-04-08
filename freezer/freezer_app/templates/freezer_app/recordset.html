@@ -7,6 +7,33 @@
 
 {% block content%}
 
+    {% for food_category, food_items in categories_items_dictionary.items %}
+
+        <h2>{{food_category}}</h2>
+        <ul class="block">
+
+        {% for food_item in food_items %}
+        <div class="row">
+            <li>{{food_item.name}}</li>
+
+            <div class="recordset-control-panel">
+                <span class="amount">{{food_item.amount}}</span>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{food_item.id}}">
+                    <div class="plus-minus-panel">
+                        <button class="plus-minus button green" type="submit" name="amount" value="1">+</button>
+                        <button class="plus-minus button red" type="submit" name="amount" value="-1">−</button>
+                    </div>
+                    <button class="button choice-button grey" type="submit", name="remove-item">Remove item</button>
+                </form>
+            </div>
+
+        </div>
+        {% endfor %}
+        </ul>
+
+    {% endfor %}
 
 
 {% endblock %}
