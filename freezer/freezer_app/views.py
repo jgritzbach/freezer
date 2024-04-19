@@ -24,12 +24,21 @@ class Recordset(generic.ListView):
 
         food_item = FoodItem.objects.get(id=request.POST.get('id'))  # Each item listed in the recordset has its own <form> element. Depending on which form in the template was called, we know the ID of the item. So we'll pull it from the database
         
+        # Which button was clicked in the form?
+
+        # Amount manipulation
         if 'amount' in request.POST:
             amount = int(request.POST.get('amount'))     # the amount to be edited based on form submit
 
             if food_item.amount + amount >=0:  # going below zero amount is not allowed
                 food_item.amount += amount
                 food_item.save()
+
+        # Removing completely from the recordset
+        elif 'remove-item' in request.POST:
+            food_item.amount = 0
+            food_item.currently_registered = False
+            food_item.save()
 
         return redirect('recordset')    # after processing the POST request, we'll redirect the user back to the recordset view       
 
