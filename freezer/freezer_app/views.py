@@ -16,6 +16,23 @@ class Recordset(generic.ListView):
 
     def get_queryset(self):
         return get_dictionary_of_food_items(True)
+    
+    def post(self, request):
+        """
+        The view processes POST requests from the form in recordset.html template
+        """
+
+        food_item = FoodItem.objects.get(id=request.POST.get('id'))  # Each item listed in the recordset has its own <form> element. Depending on which form in the template was called, we know the ID of the item. So we'll pull it from the database
+        
+        if 'amount' in request.POST:
+            amount = int(request.POST.get('amount'))     # the amount to be edited based on form submit
+
+            if food_item.amount + amount >=0:  # going below zero amount is not allowed
+                food_item.amount += amount
+                food_item.save()
+
+        return redirect('recordset')    # after processing the POST request, we'll redirect the user back to the recordset view       
+
 
 def get_dictionary_of_food_items(show_currently_registered):
     """
