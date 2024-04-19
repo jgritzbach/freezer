@@ -1,6 +1,9 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib import messages
+
 from .models import FoodItem, FoodCategory
 
 # Create your views here.
@@ -11,7 +14,6 @@ class Recordset(generic.ListView):
     template_name = 'freezer_app/recordset.html'
     context_object_name = 'categories_items_dictionary'
 
-
 def get_dictionary_of_food_items(show_currently_registered):
     """
     Returns a dictionary where food categories are the keys and currently (non)registered food items associated with that category are the values
@@ -20,7 +22,7 @@ def get_dictionary_of_food_items(show_currently_registered):
     """
 
     food_items = FoodItem.objects.filter(currently_registered=show_currently_registered)    # function returns either registered or non-registered food items
-    food_items = food_items.order_by('FoodCategory__name')  # all food items will be ordered by food category name
+    food_items = food_items.order_by('category__name')  # all food items will be ordered by food category name
 
     categories_items_dictionary = dict()  # each category will become a key in a dictionary and its associated food items will be its values
 
