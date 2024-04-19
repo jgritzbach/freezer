@@ -14,6 +14,9 @@ class Recordset(generic.ListView):
     template_name = 'freezer_app/recordset.html'
     context_object_name = 'categories_items_dictionary'
 
+    def get_queryset(self):
+        return get_dictionary_of_food_items(True)
+
 def get_dictionary_of_food_items(show_currently_registered):
     """
     Returns a dictionary where food categories are the keys and currently (non)registered food items associated with that category are the values
