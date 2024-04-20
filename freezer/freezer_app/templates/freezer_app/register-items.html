@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<h1>Item registration</h1>
+{% endblock %}
+
+{% block content%}
+
+    <!--New item registration form-->
+    <h2>New item</h2>
+    <div class="block">
+        <div id="form_registration">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form}}    
+                <button class="button choice green" type="submit" name="register-item">Register item</button>
+            </form>
+            
+        </div>
+    </div>
+
+{% endblock %}
