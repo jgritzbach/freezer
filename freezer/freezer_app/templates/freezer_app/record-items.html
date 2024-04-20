@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<h1>Record items</h1>
+{% endblock %}
+
+{% block content%}
+
+    {% for food_category, food_items in categories_items_dictionary.items %}
+
+        <h2>{{food_category}}</h2>
+        <ul class="block">
+
+        {% for food_item in food_items %}
+        <div class="row">
+            <li>{{food_item.name}}</li>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{food_item.id}}">
+                <button class="button choice grey" type="submit" name="record-item">Record item</button>
+                <button class="button choice red" type="submit", name="remove-permanently">Remove permanently</button>
+            </form>
+
+        </div>
+        {% endfor %}
+        </ul>
+
+    {% endfor %}
+
+{% endblock %}
