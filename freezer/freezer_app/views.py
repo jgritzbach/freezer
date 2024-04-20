@@ -43,6 +43,40 @@ class Recordset(generic.ListView):
         return redirect('recordset')    # after processing the POST request, we'll redirect the user back to the recordset view       
 
 
+class RecordItems(generic.ListView):
+    """
+    The view displays all items currently kept in the database as "NOT registered" but ready for quick registration
+    """
+
+    template_name = 'freezer_app/record-items.html'
+    context_object_name = 'categories_items_dictionary'
+
+    def get_queryset(self):
+        return get_dictionary_of_food_items(False)
+    
+    def post(self, request):
+        """
+        The view processes POST requests from the form in record-items.html template
+        """
+
+        # Which button was clicked in the form?
+
+        # record-item button was clicked        
+        if 'record-item' in request.POST:
+            food_item = FoodItem.objects.get(id=request.POST.get('id'))
+            food_item = FoodItem.objects.get(id=request.POST.get('id'))
+            food_item.amount = 0       # in a new entry, the amount is always zero
+            food_item.currently_registered = True
+            food_item.save()
+            return redirect('recordset')    # after processing the POST request, we'll redirect the user back to the recordset view
+        
+        # remove-permanently button was clicked
+        if 'remove-permanently' in request.POST:
+            food_item = FoodItem.objects.get(id=request.POST.get('id'))
+            food_item.delete()
+            return redirect('record-items')
+
+
 def get_dictionary_of_food_items(show_currently_registered):
     """
     Returns a dictionary where food categories are the keys and currently (non)registered food items associated with that category are the values
